@@ -1,0 +1,628 @@
+/* ===========================
+   Grundlayout & Typografie
+   =========================== */
+body {
+  font-family: system-ui, sans-serif;
+  text-align: center;
+  margin-top: 100px;
+  background-color: #f8f9fa;
+  color: #222;
+}
+
+h1 { margin-bottom: 20px; }
+
+.linie-01 {
+  width:  60%; /* 300px; oder 75% */
+  height: 0.2pt;
+  background-color: black;
+}
+
+button {
+  background-color: rgb(225, 65, 145);
+  color: white;
+  border: none;
+  padding: 14px 30px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+button:hover { transform: translateY(-2px); }
+
+/* Kartenansicht */
+#anzeige { margin-top: 30px; text-align: center; }
+.karten-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+  padding: 10px;
+}
+.karte {
+  position: relative;
+  background-color: #ebebeb;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  padding: 10px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  /* Wichtig: Kartenhöhe wird nicht durch Grid-Stretch beeinflusst */
+  align-self: start;  /* ← verhindert, dass Grid-Row die Höhe streckt */
+}
+
+.karte:hover { transform: scale(1.03); box-shadow: 0 6px 12px rgba(0,0,0,0.15); }
+.karte img {
+  width: auto;        /* feste Breite */
+  height: 120px;       /* feste Höhe */
+  object-fit: cover;   /* Bild wird beschnitten, aber nicht verzerrt */
+  border-radius: 8px;
+  display: block;
+  margin: 0 auto 10px; /* zentriert + Abstand unterhalb */
+}
+
+.karte h4 { margin-bottom: 10px; color: #003366; }
+.karte p { font-size: 0.95rem; color: #444; }
+.karte button { background-color: royalblue; color:#fff; padding:10px 20px; border-radius:25px; }
+.karte button:hover { background-color:#0056d6; }
+.karte.inactive {
+  background-color: #f5f7f8; /*  Warnfarbe */
+  opacity: 0.7;              /* leicht transparent */
+}
+.karte.inactive h4,
+.karte.inactive p {
+  color: #d00;               /* Schrift rot */
+}
+
+/* Tooltip-Farben */
+.tooltip-placeholder {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+/* ✅ Standard (verfügbar) */
+.tooltip-available {
+  background-color: #4CAF50; /* Grün */
+}
+
+/* 🚫 Nicht verfügbar */
+.tooltip-unavailable {
+  background-color: #d9534f; /* Rot */
+  opacity: 0.8;
+}
+
+/* Für Text (z. B. Max = 0) */
+.text-unavailable {
+  color: #d00;
+  font-weight: bold;
+}
+
+/* Checkbox */
+.select-artikel {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #0078d4;
+  border-radius: 6px;
+  background: #fff;
+  margin-right: 6px;
+  position: relative; 
+}
+
+.select-artikel:checked {
+  background: #009305;
+  border-color: #009305;
+}
+
+.select-artikel:checked::after {
+  content: "✓";
+  color: #fff;
+  position: absolute;
+  left: 3px;
+  top: 0;
+  font-weight: bold;
+}
+
+.checkbox-wrapper {
+  position: relative;
+}
+
+.checkbox-wrapper:hover .tooltip-placeholder::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  top: 28px; /* unterhalb der Checkbox */
+  left: 8px;
+  right: 8px;
+  background: #009305;
+  color: #fff;
+  padding: 8px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  line-height: 1.3;
+  white-space: pre-line;
+  z-index: 10;
+  pointer-events: none;
+  display: block;
+  box-sizing: border-box;
+}
+
+/* Anzahl input */
+.anzahl-input { font-size: 1rem; width:50px; height:26px; padding:2px 4px; 
+  text-align:center; border:1px solid #ccc; border-radius:6px; background:#f9f9f9; 
+  margin-left: 6px;  /* Abstand zwischen Label und Input */;}
+.anzahl-input.input-fehler { border-color:#d93025 !important; background:#ffecec !important; }
+
+.input-fehler {
+  border-color: #d93025 !important;
+  background-color: #ffecec !important;
+}
+
+/* Warenkorb-Indikator */
+/* Header-Bar für Logo und Cart */
+#header-bar {
+  position: fixed;
+  top: 15px;
+  left: 20px;
+  right: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+  pointer-events: none;  /* Damit Klicks durchgehen, außer auf Logo/Cart */
+}
+
+#header-bar > * {
+  pointer-events: auto;  /* Logo und Cart sind klickbar */
+}
+
+/* Logo */
+#logo {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 8px 15px;
+  border-radius: 30px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+#logo img {
+  height: 36px;
+  display: block;
+}
+
+/* Warenkorb-Indikator - Styling bleibt gleich */
+#cart-indicator {
+  background: rgba(0,0,0,0.7);
+  color: #fff;
+  padding: 10px 15px;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+#cart-count {
+  display: inline-block;
+  background: #ff3b3b;
+  color: white;
+  border-radius: 12px;
+  padding: 2px 8px;
+  margin-right: 4px;
+  font-weight: bold;
+}
+
+/* Mini-Cart */
+#mini-cart {
+  position: fixed;
+  top: 60px;
+  right: 20px;
+  width: 320px;
+  max-height: 80vh;
+  overflow-y: auto;
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 14px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+  z-index: 1000;
+  animation: fadeIn 0.25s ease;
+  box-sizing: border-box;
+}
+
+/* Header mit Button nebeneinander */
+#mini-cart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+#mini-cart-header h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+#closeMiniCart {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #888;
+  padding: 0;
+  line-height: 1;
+}
+
+#closeMiniCart:hover {
+  color: #000;
+}
+
+/* Mini-Cart Items */
+#mini-cart-items {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 15px;
+}
+
+#mini-cart-items .cart-item {
+  display: flex;
+  align-items: flex-start;  /* Text oben ausrichten */
+  width: 100%;
+  padding: 4px 8px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  background-color: #f9f9f9;
+  box-sizing: border-box;
+  line-height: 1.4;
+}
+
+#mini-cart-items .cart-item .remove-item {
+  flex: 0 0 24px;       /* fixe Breite für × */
+  font-size: 16px;
+  color: #d00;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  line-height: 1;
+}
+
+/* Remove-Button */
+#mini-cart-items .cart-item .remove-item:hover {
+  color: #900;
+}
+
+/* Textblock rechts vom Button */
+#mini-cart-items .cart-item .text-block {
+  margin-left: 8px;       /* Abstand rechts vom Button */
+  text-align: left;       /* Text linksbündig */
+  display: flex;           /* Name + Menge nebeneinander */
+  gap: 4px;               /* Abstand zwischen Name und Menge */
+  flex-wrap: wrap;        /* erlaubt Zeilenumbruch bei langen Artikeln */
+  align-items: baseline;  /* vertikale Ausrichtung */
+}
+
+/* Formular */
+#mini-cart-form {
+  margin-bottom: 10px;
+  font-family: inherit;
+}
+
+/* Labels */
+#mini-cart-form label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 15px;
+  text-align: left;  /* ← Labels linksbündig */
+}
+
+/* Eingabefelder */
+#mini-cart-form input,
+#mini-cart-form select,
+#mini-cart-form textarea {
+  width: 100%;
+  padding: 8px 10px;               /* mehr Innenabstand */
+  margin-bottom: 12px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;                  /* gute Lesbarkeit auch auf Mobilgeräten */
+  line-height: 1.4;
+  text-align: left;
+  appearance: none;                 /* entfernt Browser-Stile (z. B. iOS-Schatten) */
+}
+
+/* Datumseingabe (Datepicker) */
+#mini-cart-form input[type="date"] {
+  min-height: 44px;                 /* Touch-freundlich */
+  font-size: 16px;
+}
+
+/* Button */
+#sendCartBtn {
+  width: 100%;
+  background-color: royalblue;
+  color: white;
+  padding: 12px 0;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 17px;
+  transition: background-color 0.2s ease;
+}
+
+#sendCartBtn:hover {
+  background-color: #0056d6;
+}
+
+/* Responsive Anpassung für kleine Bildschirme */
+@media (max-width: 768px) {
+  #mini-cart-form input,
+  #mini-cart-form select,
+  #mini-cart-form textarea {
+    font-size: 18px;      /* größer auf Touch-Geräten */
+    padding: 12px 14px;
+  }
+
+  #mini-cart-form label {
+    font-size: 16px;
+  }
+
+  #sendCartBtn {
+    font-size: 18px;
+    padding: 14px 0;
+  }
+}
+
+#sendCartBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Modal */
+/* Summary Modal */
+#summary-modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+#summary-modal.hidden {
+  display: none;
+}
+
+#summary-modal .modal-content {
+  position: relative;
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 400px;
+  width: 90%;
+  z-index: 2001;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  text-align: left;
+  animation: fadeIn 0.3s ease;
+}
+
+#summary-modal .modal-close {
+  position: absolute;
+  top: 6px;
+  right: 0px;
+  border: none;
+  background: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #555;
+}
+
+#summary-modal pre {
+  white-space: pre-wrap;
+  margin-bottom: 20px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  color: #333;
+}
+
+#summary-modal .modal-actions {
+  text-align: right;
+}
+
+#summary-modal .modal-actions button {
+  margin-left: 10px;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#summary-modal #confirm-btn {
+  background: #0680d7;
+  color: #fff;
+}
+
+#summary-modal #cancel-btn {
+  background: #807e7e;
+}
+
+#summary-modal button:disabled {
+  background-color: #aaa;  /* grauer Button */
+  color: #fff;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Horizontale Button-Leiste im Erfolgsfenster */
+#summary-modal .success-buttons {
+  display: flex;
+  justify-content: center;   /* zentriert beide Buttons */
+  align-items: center;       /* vertikal auf gleiche Höhe */
+  gap: 10px;                 /* Abstand zwischen Buttons */
+  margin-top: 15px;
+}
+
+#summary-modal .success-buttons button {
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+}
+
+#summary-modal .success-buttons .btn-primary {
+  background-color: #1764c0;
+  color: #fff;
+}
+
+#summary-modal .success-buttons .btn-secondary {
+  background-color: #807e7e;
+  color: #fff;
+}
+
+/* 🔹 Buttonreihe nach erfolgreichem Senden */
+.summary-btn-row {
+  display: flex;
+  justify-content: center;   /* Buttons nebeneinander zentriert */
+  gap: 12px;                 /* Abstand zwischen Buttons */
+  margin-top: 16px;
+  flex-wrap: wrap;           /* Bei kleinen Bildschirmen umbrechen */
+}
+
+.summary-btn-row button {
+  flex: 1 1 auto;
+  min-width: 120px;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+/* 🔹 Primärer Button: Neue Anfrage */
+.summary-btn-row .btn-primary {
+  background-color: #1764c0;
+  color: #fff;
+}
+.summary-btn-row .btn-primary:hover {
+  background-color: #0d4a91;
+}
+
+/* 🔹 Sekundärer Button: Abbrechen */
+.summary-btn-row .btn-secondary {
+  background-color: #777;
+  color: #fff;
+}
+.summary-btn-row .btn-secondary:hover {
+  background-color: #5e5e5e;
+}
+
+#details-modal { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; z-index:2000; }
+.modal-overlay { position:absolute; inset:0; background:rgba(0,0,0,0.6); }
+.modal-content { position:relative; background:#fff; padding:20px; border-radius:12px; max-width:400px; width:90%; z-index:2001; box-shadow:0 6px 20px rgba(0,0,0,0.3); text-align:left; animation:fadeIn 0.3s ease; }
+.modal-content img { width:100%; border-radius:8px; margin-top:10px; }
+.modal-close { position:absolute; top:6px; right:0px; border:none; background:none; font-size:20px; cursor:pointer; color:#555; }
+/* Detailmodal spezifisch */
+.artikel-titel {
+  font-size: 1.1rem;
+  font-weight: 400;
+  padding: 6px 12px;
+  margin-top: 28px; /* Abstand zum X vergrößern */
+  margin-bottom: 0.3rem;
+  color: #ffffff;
+  background:#004b93;
+}
+
+.artikel-subtitel {
+  font-size: 1.0rem;
+  color: #666;
+  margin-bottom: 1rem;
+  padding: 1px 12px;
+}
+
+#details-body p {
+  margin: 0.4rem 0;
+  line-height: 1.4;
+  padding: 2px 12px;
+}
+
+/* ==========================================
+   Artikel-Details (Label + Wert Ausrichtung)
+   ========================================== */
+.artikel-details {
+  margin-top: 10px;
+  text-align: left;
+  padding: 2px 12px;
+}
+
+.artikel-details div {
+  display: flex;
+  gap: 10px;             /* Abstand zwischen Label und Wert */
+  margin-bottom: 8px;    /* Abstand zwischen Zeilen */
+}
+
+.artikel-details dt {
+  width: 120px;          /* Feste Breite für Labels */
+  font-weight: 400;
+  color: #003366;
+  flex-shrink: 0;
+}
+
+.artikel-details dd {
+  margin: 0;
+  flex: 1;
+  color: #333;
+}
+
+.artikel-bild {
+  display: block;
+  width: 100%;
+  max-height: 250px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-top: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* ===== Footer ===== */
+#page-footer {
+  background: #f3f3f3;
+  border-top: 1px solid #ccc;
+  color: #333;
+  text-align: center;
+  padding: 12px 8px;
+  font-size: 0.9rem;
+  margin-top: 40px;
+}
+
+#page-footer .footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+#page-footer a {
+  color: #0066cc;
+  text-decoration: none;
+}
+
+#page-footer a:hover {
+  text-decoration: underline;
+}
+
+.footer-sep {
+  color: #999;
+}
+
+/* Universelle hidden-Klasse (wichtig!) */
+.hidden { display: none !important; }
+
+/* Animation */
+@keyframes fadeIn { from { opacity:0; transform:translateY(-5px);} to { opacity:1; transform:translateY(0);} }
