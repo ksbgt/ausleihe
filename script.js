@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
           if (f) f.value = "";
         });
 
-        const BASE_URL = "https://ksbgt.github.io/spielothek/";
+        const BASE_URL = "https://ksbgt.github.io/ausleihe/";
         const resLocal = await fetch("Exports/Artikel.json");
         const daten = await resLocal.json();
 
