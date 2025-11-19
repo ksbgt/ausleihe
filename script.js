@@ -111,6 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
             minAnzahl: minAnz,
             maxAnzahl: maxAnz,
             bereich: item.bereich || "",
+            lagerort: item.lagerort || "",
             bild: bildPfad
           };
         });
@@ -514,6 +515,7 @@ function openDetailsModal(artikel){
       <div><dt>Max. Anzahl:</dt><dd>${escapeHtml(String(artikel.maxAnzahl??"—"))}</dd></div>
       <div><dt>Code:</dt><dd>${escapeHtml(artikel.barcode||"—")}</dd></div>
       <div><dt>Bereich:</dt><dd>${escapeHtml(artikel.bereich||"—")}</dd></div>
+      <div><dt>Lagerort:</dt><dd>${escapeHtml(artikel.lagerort||"—")}</dd></div>
     </dl>
     ${bild? `<img class="artikel-bild" src="${escapeHtml(bild)}" alt="${escapeHtml(artikel.name)}">`:""}
   `;
