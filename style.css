@@ -5,8 +5,15 @@ body {
   font-family: system-ui, sans-serif;
   text-align: center;
   margin-top: 100px;
-  background-color: #f8f9fa;
-  color: #222;
+  /* Hintergrundbild */
+  background-image: url("Standardbilder/IMG_0070a.JPG");
+  background-size: cover;       /* Bild füllt den gesamten Bereich */
+  background-position: center;  /* Bild wird zentriert */
+  background-repeat: no-repeat; /* Bild wird nicht gekachelt */
+  /* background-color: #f8f9fa; */
+  /* background-color: #000c30; */
+  /* color: #222; */
+  color: #f0f0f0;
 }
 
 h1 { margin-bottom: 20px; }
